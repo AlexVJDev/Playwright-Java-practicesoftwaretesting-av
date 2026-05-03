@@ -1,52 +1,25 @@
 package com.practicesoftwaretesting.tests.basicSamples;
 
-import com.microsoft.playwright.*;
-import org.junit.jupiter.api.*;
-import java.util.Arrays;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.UsePlaywright;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+@UsePlaywright
 public class SimplePlaywrightTestC {
 
-    private static Playwright playwright;
-    private static Browser browser;
-    private static BrowserContext browserContext;
-    protected Page page;
-
-    @BeforeAll
-    public static void setUpBrowser() {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions()
-                        .setHeadless(true)
-                        .setArgs(Arrays.asList("--no-sandbox","--disable-extensions","--disable-gpu"))
-        );
-        browserContext = browser.newContext();
-    }
-
-    @AfterAll
-    public static void tearDownBrowser() {
-        browser.close();
-        playwright.close();
-    }
-
-    @BeforeEach
-    public void setUpBrowserContext() {
-        page = browserContext.newPage();
-    }
-
     @Test
-    void shouldShowThePageTitle() {
+    void shouldShowThePageTitle(Page page) {
         page.navigate("https://practicesoftwaretesting.com");
-
         String title = page.title();
         Assertions.assertTrue(title.contains("Practice Software Testing"));
     }
 
     @Test
-    void shouldShowSearchTermsInTheTitle() {
+    void shouldShowSearchTermsInTheTitle(Page page) {
         page.navigate("https://practicesoftwaretesting.com");
         page.locator("[placeholder=Search]").fill("Pliers");
         page.locator("button:has-text('Search')").click();
-
         int matchingProductCount = page.locator(".card-title").count();
         Assertions.assertTrue(matchingProductCount > 0);
     }
