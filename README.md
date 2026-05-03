@@ -1,2 +1,5 @@
-# Playwright-Java-practicesoftwaretesting-av
-Java + Playwright practicesoftwaretesting.com tests
+# Playwright-saucedemo.com
+# 🎭 Playwright Java Automation Project
+
+
+mvn allure:serve - to see reports 
