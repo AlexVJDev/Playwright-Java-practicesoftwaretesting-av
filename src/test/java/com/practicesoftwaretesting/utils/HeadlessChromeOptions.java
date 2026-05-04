@@ -1,4 +1,4 @@
-package com.practicesoftwaretesting.tests.basicSamples;
+package com.practicesoftwaretesting.utils;
 
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.junit.Options;

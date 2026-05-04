@@ -1,4 +1,4 @@
-package com.practicesoftwaretesting.pages;
+package com.practicesoftwaretesting.pageobjects;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;

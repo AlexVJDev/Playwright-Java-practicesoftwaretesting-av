@@ -3,6 +3,7 @@ package com.practicesoftwaretesting.tests.basicSamples;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
+import com.practicesoftwaretesting.utils.HeadlessChromeOptions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

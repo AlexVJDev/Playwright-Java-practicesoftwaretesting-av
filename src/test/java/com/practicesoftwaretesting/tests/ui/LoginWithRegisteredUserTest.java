@@ -4,7 +4,7 @@ import com.practicesoftwaretesting.api.UserAPIClient;
 import com.practicesoftwaretesting.fixtures.PlaywrightTestCase;
 import com.practicesoftwaretesting.fixtures.RegisterUserFixtureLoader;
 import com.practicesoftwaretesting.models.pojo.User;
-import com.practicesoftwaretesting.pages.LoginPage;
+import com.practicesoftwaretesting.pageobjects.LoginPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
