@@ -3,7 +3,6 @@ package com.practicesoftwaretesting.fixtures;
 import com.practicesoftwaretesting.models.pojo.Address;
 import com.practicesoftwaretesting.models.pojo.User;
 import lombok.NonNull;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -8,15 +8,15 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class UserApiClient {
+public class UserAPIClient {
 
     private final RequestSpecification requestSpec;
 
-    public UserApiClient() {
+    public UserAPIClient() {
         this(ApiConfig.INSTANCE.baseUri());
     }
 
-    public UserApiClient(String baseUri) {
+    public UserAPIClient(String baseUri) {
         this.requestSpec = RestAssured.given()
                 .baseUri(baseUri)
                 .accept(ContentType.JSON)
