@@ -1,0 +1,2 @@
+street;house_number;city;state;country;postal_code
+5th Avenue;12;New York;NY;USA;10022

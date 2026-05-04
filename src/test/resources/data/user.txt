@@ -1,0 +1,2 @@
+firstName;lastName;phone;dob;password;email
+John;Smith;501 212-3435;2001-01-01;StrongPassword12345#;jhon@ggmail.com

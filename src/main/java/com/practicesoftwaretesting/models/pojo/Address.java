@@ -1,12 +1,16 @@
 package com.practicesoftwaretesting.models.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class Address {
-    private final String street = "5th Avenue";
-    private final String city = "New York";
-    private final String state = "NY";
-    private final String country = "Country";
-    private final String postal_code = "10022";
+    private String street;
+    @JsonProperty("house_number")
+    private String houseNumber;
+    private String city;
+    private String state;
+    private String country;
+    @JsonProperty("postal_code")
+    private String postalCode;
 }
