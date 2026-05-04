@@ -1,63 +1,37 @@
 package com.practicesoftwaretesting.tests.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.practicesoftwaretesting.api.ProductsApiClient;
+import com.practicesoftwaretesting.models.pojo.Product;
+import com.practicesoftwaretesting.models.response.ProductResponse;
+import io.restassured.mapper.ObjectMapperType;
 import org.junit.jupiter.api.Test;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 public class ProductsApiTest {
 
-    private static final String PRODUCTS_URL = "https://api.practicesoftwaretesting.com/products";
-
-    private static final HttpClient HTTP = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(10))
-            .build();
-
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private final ProductsApiClient productsApi = new ProductsApiClient();
 
     @Test
-    void getProductsReturnsStatus200() throws Exception {
-        HttpResponse<String> response = sendGetProducts();
-
-        assertThat(response.statusCode()).isEqualTo(200);
+    void getProductsReturnsStatus200() {
+        assertThat(productsApi.getProductsResponse().getStatusCode()).isEqualTo(200);
     }
 
     @Test
-    void getProductsJsonContainsExpectedShapeAndSampleValues() throws Exception {
-        HttpResponse<String> response = sendGetProducts();
+    void getProductsJsonContainsExpectedShapeAndSampleValues() {
+        ProductResponse response = productsApi.getProductsResponse().as(ProductResponse.class, ObjectMapperType.JACKSON_2);
 
-        assertThat(response.statusCode()).isEqualTo(200);
-        JsonNode root = MAPPER.readTree(response.body());
+        assertThat(response.getCurrentPage()).isEqualTo(1);
+        assertThat(response.getData()).isNotNull().isNotEmpty();
+        assertThat(response.getLastPage()).isPositive();
+        assertThat(response.getPerPage()).isPositive();
+        assertThat(response.getTotal()).isPositive();
 
-        assertThat(root.path("current_page").asInt()).isEqualTo(1);
-        assertThat(root.path("data").isArray()).isTrue();
-        assertThat(root.path("data").size()).isPositive();
-        assertThat(root.path("last_page").asInt()).isPositive();
-        assertThat(root.path("per_page").asInt()).isPositive();
-        assertThat(root.path("total").asInt()).isPositive();
-
-        JsonNode first = root.path("data").get(0);
-        assertThat(first.path("name").asText()).isEqualTo("Combination Pliers");
-        assertThat(first.path("price").asDouble()).isCloseTo(14.15, within(0.001));
-        assertThat(first.path("in_stock").asBoolean()).isTrue();
-        assertThat(first.path("category").path("slug").asText()).isEqualTo("pliers");
-        assertThat(first.path("brand").path("name").asText()).isEqualTo("ForgeFlex Tools");
-    }
-
-    private static HttpResponse<String> sendGetProducts() throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(PRODUCTS_URL))
-                .header("Accept", "application/json")
-                .timeout(Duration.ofSeconds(30))
-                .GET()
-                .build();
-
-        return HTTP.send(request, HttpResponse.BodyHandlers.ofString());
+        Product first = response.getData().getFirst();
+        assertThat(first.getName()).isEqualTo("Combination Pliers");
+        assertThat(first.getPrice()).isCloseTo(14.15, within(0.001));
+        assertThat(first.isInStock()).isTrue();
+        assertThat(first.getCategory().getSlug()).isEqualTo("pliers");
+        assertThat(first.getBrand().getName()).isEqualTo("ForgeFlex Tools");
     }
 }

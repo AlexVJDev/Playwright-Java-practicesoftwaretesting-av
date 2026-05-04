@@ -26,6 +26,7 @@
 		<maven.surefire.version>3.5.5</maven.surefire.version>
 		<owner.version>1.0.12</owner.version>
 		<playwright.version>1.58.0</playwright.version>
+		<rest-assured.version>5.5.1</rest-assured.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>2.0.17</slf4j.version>
@@ -112,6 +113,11 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.44</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>
 		</dependency>
 	</dependencies>
 
