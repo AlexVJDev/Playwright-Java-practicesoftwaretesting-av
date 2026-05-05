@@ -13,8 +13,9 @@
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 
-		<aspectjweaver.version>1.9.25.1</aspectjweaver.version>
 		<assertj.version>3.27.7</assertj.version>
+		<aspectjweaver.version>1.9.25.1</aspectjweaver.version>
+		<aspectj.version>1.9.22</aspectj.version>
 		<allure.version>2.33.0</allure.version>
 		<allure-maven.version>2.17.0</allure-maven.version>
 		<compiler.version>3.15.0</compiler.version>
@@ -26,7 +27,7 @@
 		<maven.surefire.version>3.5.5</maven.surefire.version>
 		<owner.version>1.0.12</owner.version>
 		<playwright.version>1.58.0</playwright.version>
-		<rest-assured.version>5.5.1</rest-assured.version>
+		<rest-assured.version>6.0.0</rest-assured.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>2.0.17</slf4j.version>
@@ -121,30 +122,74 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+    <build>
 		<plugins>
-			<plugin>
-				<groupId>io.qameta.allure</groupId>
-				<artifactId>allure-maven</artifactId>
-				<version>${allure-maven.version}</version>
-				<configuration>
-					<reportVersion>${allure.version}</reportVersion>
-					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compiler.version}</version>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${surefire.version}</version>
+				<version>3.2.3</version>
 				<configuration>
-					<forkCount>1</forkCount>
-					<reuseForks>true</reuseForks>
+					<skipTests>true</skipTests>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.2.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<argLine>
+						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+					</argLine>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+					</includes>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjweaver</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>2.15.0</version>
+				<configuration>
+					<reportVersion>${allure.version}</reportVersion>
+					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>allure-reports</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
