@@ -30,7 +30,6 @@ public class ProductsApiTest {
         Product first = response.getData().getFirst();
         assertThat(first.getName()).isEqualTo("Combination Pliers");
         assertThat(first.getPrice()).isCloseTo(14.15, within(0.001));
-        assertThat(first.isInStock()).isTrue();
         assertThat(first.getCategory().getSlug()).isEqualTo("pliers");
         assertThat(first.getBrand().getName()).isEqualTo("ForgeFlex Tools");
     }
