@@ -20,13 +20,13 @@ public class User {
     private String email;
 
     public User withPassword(String password) {
-     return new User(
-     firstName,
-     lastName,
-     address,
-     phone,
-     dob,
-     password,
-     email);
-     }
+        return new User(
+            firstName,
+            lastName,
+            address,
+            phone,
+            dob,
+            password,
+            email);
+    }
 }

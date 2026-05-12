@@ -38,4 +38,12 @@ public class UserAPIClient {
                 .when()
                 .post("/users/login");
     }
+
+    public Response getUsersMe(String accessToken) {
+        return RestAssured.given()
+                .spec(requestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .when()
+                .get("/users/me");
+    }
 }
